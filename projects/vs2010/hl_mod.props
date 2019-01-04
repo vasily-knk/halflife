@@ -2,20 +2,16 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ImportGroup Label="PropertySheets" />
   <PropertyGroup Label="UserMacros">
-    <HLGameDir>D:\Games\SteamLibrary\steamapps\common\Half-Life</HLGameDir>
     <HLModName>mymod</HLModName>
   </PropertyGroup>
   <PropertyGroup />
   <ItemDefinitionGroup>
     <PostBuildEvent>
-      <Command>copy $(TargetPath) "$(HLGameDir)\$(HLModName)\$(HLModDllDir)\$(TargetName).dll"
-copy $(TargetDir)\$(TargetName).pdb "$(HLGameDir)\$(HLModName)\$(HLModDllDir)\$(TargetName).pdb"</Command>
+      <Command>copy $(TargetPath) "$(HL_GAME_DIR)\$(HLModName)\$(HLModDllDir)\$(TargetName).dll"
+copy $(TargetDir)\$(TargetName).pdb "$(HL_GAME_DIR)\$(HLModName)\$(HLModDllDir)\$(TargetName).pdb"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <BuildMacro Include="HLGameDir">
-      <Value>$(HLGameDir)</Value>
-    </BuildMacro>
     <BuildMacro Include="HLModName">
       <Value>$(HLModName)</Value>
     </BuildMacro>
