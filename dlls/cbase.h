@@ -267,6 +267,8 @@ public:
 	static CBaseEntity *Instance( entvars_t *pev ) { return Instance( ENT( pev ) ); }
 	static CBaseEntity *Instance( int eoffset) { return Instance( ENT( eoffset) ); }
 
+    static void OnConstructed(CBaseEntity *ent);
+
 	CBaseMonster *GetMonsterPointer( entvars_t *pevMonster ) 
 	{ 
 		CBaseEntity *pEntity = Instance( pevMonster );
@@ -748,7 +750,9 @@ template <class T> T * GetClassPtr( T *a )
 		// allocate private data 
 		a = new(pev) T;
 		a->pev = pev;
-	}
+
+        CBaseEntity::OnConstructed(a);
+    }
 	return a;
 }
 

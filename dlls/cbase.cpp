@@ -21,6 +21,8 @@
 #include	"gamerules.h"
 #include	"game.h"
 
+#include "entswatcher.h"
+
 void EntvarsKeyvalue( entvars_t *pev, KeyValueData *pkvd );
 
 extern "C" void PM_Move ( struct playermove_s *ppmove, int server );
@@ -769,3 +771,7 @@ CBaseEntity * CBaseEntity::Create( char *szName, const Vector &vecOrigin, const 
 }
 
 
+void CBaseEntity::OnConstructed(CBaseEntity* ent)
+{
+    EntsWatcher::Instance().AddEnt(ent);
+}

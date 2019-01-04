@@ -44,6 +44,8 @@
 #include <ctype.h>
 #endif
 
+#include "entswatcher.h"
+
 extern DLL_GLOBAL ULONG		g_ulModelIndexPlayer;
 extern DLL_GLOBAL BOOL		g_fGameOver;
 extern DLL_GLOBAL int		g_iSkillLevel;
@@ -697,6 +699,8 @@ void ServerDeactivate( void )
 
 	// Peform any shutdown operations here...
 	//
+
+    EntsWatcher::Instance().Reset();
 }
 
 void ServerActivate( edict_t *pEdictList, int edictCount, int clientMax )
@@ -788,7 +792,9 @@ void ParmsChangeLevel( void )
 //
 void StartFrame( void )
 {
-	if ( g_pGameRules )
+	EntsWatcher::Instance().Update();
+    
+    if ( g_pGameRules )
 		g_pGameRules->Think();
 
 	if ( g_fGameOver )
