@@ -32,10 +32,12 @@
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="hldll.props" />
     <Import Project="hl_mod.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="hldll.props" />
     <Import Project="hl_mod.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
@@ -67,13 +69,8 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ModuleDefinitionFile>$(ProjectDir)..\..\dlls\hl.def</ModuleDefinitionFile>
     </Link>
-    <PostBuildEvent>
-      <Command>copy $(TargetPath) "$(HLGameDir)\$(HLModName)\dlls\$(TargetName).dll"
-copy $(TargetDir)\$(TargetName).pdb "$(HLGameDir)\$(HLModName)\dlls\$(TargetName).pdb"</Command>
-    </PostBuildEvent>
-    <PostBuildEvent>
-      <Message>Performing Post-Build Event</Message>
-    </PostBuildEvent>
+    <PostBuildEvent />
+    <PostBuildEvent />
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -95,13 +92,8 @@ copy $(TargetDir)\$(TargetName).pdb "$(HLGameDir)\$(HLModName)\dlls\$(TargetName
       <OptimizeReferences>true</OptimizeReferences>
       <ModuleDefinitionFile>$(ProjectDir)..\..\dlls\hl.def</ModuleDefinitionFile>
     </Link>
-    <PostBuildEvent>
-      <Command>call ..\..\filecopy.bat $(TargetPath) ..\..\..\game\mod\dlls\$(TargetName).dll
-call ..\..\filecopy.bat $(TargetDir)\$(TargetName).pdb ..\..\..\game\mod\dlls\$(TargetName).pdb</Command>
-    </PostBuildEvent>
-    <PostBuildEvent>
-      <Message>Performing Post-Build Event</Message>
-    </PostBuildEvent>
+    <PostBuildEvent />
+    <PostBuildEvent />
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\dlls\aflock.cpp" />

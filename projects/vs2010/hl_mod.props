@@ -6,7 +6,12 @@
     <HLModName>mymod</HLModName>
   </PropertyGroup>
   <PropertyGroup />
-  <ItemDefinitionGroup />
+  <ItemDefinitionGroup>
+    <PostBuildEvent>
+      <Command>copy $(TargetPath) "$(HLGameDir)\$(HLModName)\$(HLModDllDir)\$(TargetName).dll"
+copy $(TargetDir)\$(TargetName).pdb "$(HLGameDir)\$(HLModName)\$(HLModDllDir)\$(TargetName).pdb"</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
   <ItemGroup>
     <BuildMacro Include="HLGameDir">
       <Value>$(HLGameDir)</Value>
