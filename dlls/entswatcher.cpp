@@ -21,6 +21,11 @@ namespace
             int aaa = 5;
         }
 
+        void update()
+        {
+            classname = STRING(handle->pev->classname);
+        }
+
         EHANDLE handle;
         char const *classname;
     };
@@ -56,6 +61,9 @@ struct EntsWatcherImpl : EntsWatcher
         });
 
         int aaa = 5;
+
+        for (auto it = ents_.begin(); it != ents_.end(); ++it)
+            (*it)->update();
     }
 
 
