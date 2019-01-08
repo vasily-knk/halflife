@@ -5,6 +5,7 @@
 #include <vector>
 #include <algorithm>
 #include <iterator>
+#include <memory>
 
 namespace 
 {
@@ -14,6 +15,7 @@ namespace
             : handle(handle)
             , classname(STRING(handle->pev->classname))
         {
+            int aaa = 5;
         }
 
         ~ent_desc_t()
@@ -23,11 +25,24 @@ namespace
 
         void update()
         {
-            classname = STRING(handle->pev->classname);
+            const auto model = handle->pev->model;
+            if (model != old_model_)
+            {
+                if (old_model_)
+                {
+                    auto const test = STRING(model);
+                    int aaa = 5;
+                }
+                
+                old_model_ = model;
+            }
         }
-
+    
+ 
         EHANDLE handle;
         char const *classname;
+    private:
+        string_t old_model_ = 0;
     };
 
     typedef std::shared_ptr<ent_desc_t> ent_desc_ptr;
@@ -44,23 +59,13 @@ struct EntsWatcherImpl : EntsWatcher
 
         EHANDLE h;
         h = ent;
-        ents_.push_back(std::make_shared<ent_desc_t>(h));
+        pending_.push_back(h);
     }
 
     void Update() override
     {
         auto const gone = RemoveDead();
-        
-        static std::vector<char const*> names;
-        names.clear();
-        
-        std::transform(ents_.begin(), ents_.end(), std::back_inserter(names),
-            [](ent_desc_ptr ptr)
-        {
-            return STRING(ptr->handle.Get()->v.classname);
-        });
-
-        int aaa = 5;
+        AddPending();
 
         for (auto it = ents_.begin(); it != ents_.end(); ++it)
             (*it)->update();
@@ -90,9 +95,21 @@ private:
 
         return gone;
     }
+
+    void AddPending()
+    {
+        for (auto &h : pending_)
+        {
+            if (UTIL_IsValidEntity(h.Get()))
+                ents_.push_back(std::make_shared<ent_desc_t>(h));
+        }
+
+        pending_.clear();
+    }
+
 private:
     std::vector<ent_desc_ptr> ents_;
-    std::vector<std::pair<CBaseEntity *, std::type_info const*>> pending_;
+    std::vector<EHANDLE> pending_;
 };
 
 EntsWatcher& EntsWatcher::Instance()
