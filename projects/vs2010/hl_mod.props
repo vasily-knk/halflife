@@ -10,6 +10,9 @@
       <Command>copy $(TargetPath) "$(HL_GAME_DIR)\$(HLModName)\$(HLModDllDir)\$(TargetName).dll"
 copy $(TargetDir)\$(TargetName).pdb "$(HL_GAME_DIR)\$(HLModName)\$(HLModDllDir)\$(TargetName).pdb"</Command>
     </PostBuildEvent>
+    <ClCompile>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
     <BuildMacro Include="HLModName">
